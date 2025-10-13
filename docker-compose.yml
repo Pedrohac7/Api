@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  # Serviço da aplicação Node.js
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mysql
+    environment:
+      - DB_HOST=mysql
+      - DB_NAME=sequelizenode
+      - DB_USER=root
+      - DB_PASSWORD=261122
+    volumes:
+      - .:/app
+      - /app/node_modules
+    restart: unless-stopped
+
+  # Serviço do MySQL
+  mysql:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: 261122
+      MYSQL_DATABASE: sequelizenode
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    restart: unless-stopped
+
+volumes:
+  mysql_data:
