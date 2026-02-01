@@ -3,10 +3,25 @@ import routes from "./routes.js";
 import db from "./src/db.js";
 
 const app = express();
+const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
-app.use(routes);
+app.use("/api", routes);
 
-db.sync(() => console.log(`Banco de dados conectado: ${process.env.DB_NAME}`));
+async function startServer() {
+  try {
+    await db.authenticate();
+    console.log("Banco de dados conectado com sucesso");
 
-app.listen(3000, () => console.log("Servidor iniciado na porta 3000"));
+    await db.sync();
+
+    app.listen(PORT, () => {
+      console.log(`Servidor rodando na porta ${PORT}`);
+    });
+  } catch (error) {
+    console.error("Erro ao conectar no banco:", error);
+    process.exit(1);
+  }
+}
+
+startServer();
