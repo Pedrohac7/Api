@@ -1,12 +1,12 @@
-import express from "express";
-import clients from "./src/controllers/clients.js"
+import { Router } from "express";
+import clientsController from "./src/controllers/clients.js";
 
-const routes = express.Router();
+const routes = Router();
 
-routes.get("/listaClientes",clients.listaClientes);
-routes.post("/adicionaCliente", clients.adicionaCliente);
-routes.get("/buscaCliente/:id", clients.listaCliente);
-routes.put("/editarCliente/:id", clients.editaCliente);
-routes.delete("/deletarCliente/:id", clients.deletaCliente);
+routes.get("/clients", clientsController.list);
+routes.post("/clients", clientsController.create);
+routes.get("/clients/:id", clientsController.findById);
+routes.put("/clients/:id", clientsController.update);
+routes.delete("/clients/:id", clientsController.remove);
 
-export { routes as default };
+export default routes;
