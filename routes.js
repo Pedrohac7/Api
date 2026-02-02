@@ -3,10 +3,10 @@ import clientsController from "./src/controllers/clients.js";
 
 const routes = Router();
 
-routes.get("/clients", clientsController.list);
-routes.post("/clients", clientsController.create);
-routes.get("/clients/:id", clientsController.findById);
-routes.put("/clients/:id", clientsController.update);
-routes.delete("/clients/:id", clientsController.remove);
+routes.get("/clients", clientsController.listaClientes);
+routes.post("/clients", clientsController.adicionaCliente);
+routes.get("/clients/:id", clientsController.listaCliente);
+routes.put("/clients/:id", clientsController.editaCliente);
+routes.delete("/clients/:id", clientsController.deletaCliente);
 
 export default routes;
