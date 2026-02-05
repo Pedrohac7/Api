@@ -32,9 +32,12 @@ async function adicionaCliente(req, res) {
 
     return res.status(201).json(client);
   } catch (error) {
-    return res.status(500).json({ error: "Erro ao criar cliente" });
+    return res.status(400).json({
+      error: "Email já cadastrado",
+    });
   }
 }
+
 
 async function editaCliente(req, res) {
   try {
