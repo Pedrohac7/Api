@@ -1,11 +1,25 @@
 import ClientRepository from "../models/clientsModel.js";
 
+function success(res, status, data) {
+  return res.status(status).json({
+    success: true,
+    data,
+  });
+}
+
+function failure(res, status, message) {
+  return res.status(status).json({
+    success: false,
+    error: message,
+  });
+}
+
 async function listaClientes(req, res) {
   try {
     const clients = await ClientRepository.findAll();
-    return res.status(200).json(clients);
+    return success(res, 200, clients);
   } catch (error) {
-    return res.status(500).json({ error: "Erro ao listar clientes" });
+    return failure(res, 500, "Erro ao listar clientes");
   }
 }
 
@@ -14,12 +28,12 @@ async function listaCliente(req, res) {
     const client = await ClientRepository.findByPk(req.params.id);
 
     if (!client) {
-      return res.status(404).json({ error: "Cliente nao encontrado" });
+      return failure(res, 404, "Cliente nao encontrado");
     }
 
-    return res.status(200).json(client);
+    return success(res, 200, client);
   } catch (error) {
-    return res.status(500).json({ error: "Erro ao buscar cliente" });
+    return failure(res, 500, "Erro ao buscar cliente");
   }
 }
 
@@ -30,14 +44,11 @@ async function adicionaCliente(req, res) {
       email: req.body.email,
     });
 
-    return res.status(201).json(client);
+    return success(res, 201, client);
   } catch (error) {
-    return res.status(400).json({
-      error: "Email já cadastrado",
-    });
+    return failure(res, 400, "Email já cadastrado");
   }
 }
-
 
 async function editaCliente(req, res) {
   try {
@@ -52,13 +63,13 @@ async function editaCliente(req, res) {
     );
 
     if (!updated) {
-      return res.status(404).json({ error: "Cliente nao encontrado" });
+      return failure(res, 404, "Cliente nao encontrado");
     }
 
     const client = await ClientRepository.findByPk(req.params.id);
-    return res.status(200).json(client);
+    return success(res, 200, client);
   } catch (error) {
-    return res.status(500).json({ error: "Erro ao atualizar cliente" });
+    return failure(res, 500, "Erro ao atualizar cliente");
   }
 }
 
@@ -69,12 +80,12 @@ async function deletaCliente(req, res) {
     });
 
     if (!deleted) {
-      return res.status(404).json({ error: "Cliente nao encontrado" });
+      return failure(res, 404, "Cliente nao encontrado");
     }
 
     return res.status(204).send();
   } catch (error) {
-    return res.status(500).json({ error: "Erro ao deletar cliente" });
+    return failure(res, 500, "Erro ao deletar cliente");
   }
 }
 
