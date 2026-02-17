@@ -1,20 +1,26 @@
-import { Sequelize } from "sequelize";
-import db from "../config/db.js";
+module.exports = (sequelize, DataTypes) => {
+  const Client = sequelize.define('Client', {
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true
+    },
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    document: {
+      type: DataTypes.STRING,
+      allowNull: false
+    }
+  });
 
-export default db.define("client", {
-  id: {
-    type: Sequelize.INTEGER.UNSIGNED,
-    primaryKey: true,
-    autoIncrement: true,
-    allowNull: false,
-  },
-  nome: {
-    type: Sequelize.STRING,
-    allowNull: false,
-  },
-  email: {
-    type: Sequelize.STRING,
-    allowNull: false,
-    unique: true,
-  },
-});
+  Client.associate = (models) => {
+    Client.belongsTo(models.User, {
+      foreignKey: 'userId',
+      as: 'user'
+    });
+  };
+
+  return Client;
+};
