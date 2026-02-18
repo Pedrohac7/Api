@@ -1,21 +1,15 @@
-import { Sequelize } from "sequelize"; // importar o sequelize
-import dotenv from "dotenv/config.js"; // importar o dotenv para localizar as variáveis de ambiente
+const { Sequelize } = require("sequelize");
+require("dotenv").config();
 
-const dbName = process.env.DB_NAME; // passar os dados do .env para as constantes
-const dbUser = process.env.DB_USER;
-const dbHost = process.env.DB_HOST;
-const dbPassword = process.env.DB_PASSWORD;
+const sequelize = new Sequelize(
+  process.env.DB_NAME,
+  process.env.DB_USER,
+  process.env.DB_PASSWORD,
+  {
+    host: process.env.DB_HOST,
+    dialect: "postgres",
+    logging: false
+  }
+);
 
-const sequelize = new Sequelize(dbName, dbUser, dbPassword, {
-  dialect: "mysql",
-  host: dbHost,
-  logging: false,
-  dialectOptions: {
-      ssl: {
-        rejectUnauthorized: true
-      }
-    },
-});
-
-
-export default sequelize; //exportar
+module.exports = sequelize;

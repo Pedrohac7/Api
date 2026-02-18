@@ -1,34 +1,35 @@
 version: '3.8'
 
 services:
-  # Serviço da aplicação Node.js
   app:
     build: .
     ports:
       - "3000:3000"
     depends_on:
-      - mysql
+      - postgres
     environment:
-      - DB_HOST=mysql
+      - DB_HOST=postgres
       - DB_NAME=sequelizenode
-      - DB_USER=root
+      - DB_USER=postgres
       - DB_PASSWORD=261122
+      - DB_SSL=false
     volumes:
       - .:/app
       - /app/node_modules
     restart: unless-stopped
 
-  # Serviço do MySQL
-  mysql:
-    image: mysql:8.0
+  postgres:
+    image: postgres:15
+    container_name: postgres_db
     environment:
-      MYSQL_ROOT_PASSWORD: 261122
-      MYSQL_DATABASE: sequelizenode
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 261122
+      POSTGRES_DB: sequelizenode
     ports:
-      - "3307:3306"
+      - "5432:5432"
     volumes:
-      - mysql_data:/var/lib/mysql
+      - postgres_data:/var/lib/postgresql/data
     restart: unless-stopped
 
 volumes:
-  mysql_data:
+  postgres_data:
