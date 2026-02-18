@@ -10,6 +10,11 @@ const sequelize = new Sequelize(dbName, dbUser, dbPassword, {
   dialect: "mysql",
   host: dbHost,
   logging: false,
+  dialectOptions: {
+      ssl: {
+        rejectUnauthorized: true
+      }
+    },
 });
 
 
