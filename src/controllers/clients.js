@@ -1,4 +1,4 @@
-import ClientRepository from "../models/clientsModel.js";
+const { Client } = require("../models");
 
 function success(res, status, data) {
   return res.status(status).json({
@@ -16,7 +16,7 @@ function failure(res, status, message) {
 
 async function listaClientes(req, res) {
   try {
-    const clients = await ClientRepository.findAll();
+    const clients = await Client.findAll();
     return success(res, 200, clients);
   } catch (error) {
     return failure(res, 500, "Erro ao listar clientes");
@@ -25,7 +25,7 @@ async function listaClientes(req, res) {
 
 async function listaCliente(req, res) {
   try {
-    const client = await ClientRepository.findByPk(req.params.id);
+    const client = await Client.findByPk(req.params.id);
 
     if (!client) {
       return failure(res, 404, "Cliente nao encontrado");
@@ -39,7 +39,7 @@ async function listaCliente(req, res) {
 
 async function adicionaCliente(req, res) {
   try {
-    const client = await ClientRepository.create({
+    const client = await Client.create({
       nome: req.body.nome,
       email: req.body.email,
     });
@@ -52,7 +52,7 @@ async function adicionaCliente(req, res) {
 
 async function editaCliente(req, res) {
   try {
-    const [updated] = await ClientRepository.update(
+    const [updated] = await Client.update(
       {
         nome: req.body.nome,
         email: req.body.email,
@@ -66,7 +66,7 @@ async function editaCliente(req, res) {
       return failure(res, 404, "Cliente nao encontrado");
     }
 
-    const client = await ClientRepository.findByPk(req.params.id);
+    const client = await Client.findByPk(req.params.id);
     return success(res, 200, client);
   } catch (error) {
     return failure(res, 500, "Erro ao atualizar cliente");
@@ -75,7 +75,7 @@ async function editaCliente(req, res) {
 
 async function deletaCliente(req, res) {
   try {
-    const deleted = await ClientRepository.destroy({
+    const deleted = await Client.destroy({
       where: { id: req.params.id },
     });
 
@@ -89,7 +89,7 @@ async function deletaCliente(req, res) {
   }
 }
 
-export default {
+module.exports = {
   listaClientes,
   listaCliente,
   adicionaCliente,

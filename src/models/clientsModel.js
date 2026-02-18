@@ -1,26 +1,15 @@
 module.exports = (sequelize, DataTypes) => {
-  const Client = sequelize.define('Client', {
-    id: {
-      type: DataTypes.INTEGER,
-      primaryKey: true,
-      autoIncrement: true
-    },
-    name: {
+  const Client = sequelize.define("Client", {
+    nome: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
     },
-    document: {
+    email: {
       type: DataTypes.STRING,
-      allowNull: false
-    }
+      allowNull: false,
+      unique: true,
+    },
   });
-
-  Client.associate = (models) => {
-    Client.belongsTo(models.User, {
-      foreignKey: 'userId',
-      as: 'user'
-    });
-  };
 
   return Client;
 };

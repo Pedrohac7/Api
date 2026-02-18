@@ -1,5 +1,5 @@
-import { Router } from "express";
-import clientsController from "../controllers/clients.js";
+const { Router } = require("express");
+const clientsController = require("../controllers/clients");
 
 const routes = Router();
 
@@ -9,4 +9,4 @@ routes.get("/clients/:id", clientsController.listaCliente);
 routes.put("/clients/:id", clientsController.editaCliente);
 routes.delete("/clients/:id", clientsController.deletaCliente);
 
-export default routes;
+module.exports = routes;
