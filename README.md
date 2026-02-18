@@ -1,75 +1,91 @@
-# API Node.js com Sequelize e MySQL
+API - CRUD de Clientes com Autenticação JWT
 
-Esta é uma API RESTful desenvolvida com Node.js, Express, Sequelize ORM e MySQL.
+API REST desenvolvida com Node.js, Express e Sequelize.
+Possui autenticação com JWT e senha criptografada com bcrypt.
 
-## 🚀 Como rodar com Docker
+Tecnologias
 
-### Pré-requisitos
-- Docker
-- Docker Compose
+Node.js
 
-### Comandos para rodar
+Express
 
-1. **Clone o projeto e entre na pasta:**
-```bash
+Sequelize
+
+MySQL
+
+JWT
+
+bcryptjs
+
+dotenv
+
+Funcionalidades
+
+Registro de usuário
+
+Login com geração de token JWT
+
+CRUD de clientes
+
+Rotas protegidas por middleware de autenticação
+
+Instalação
+git clone https://github.com/Pedrohac7/Api.git
 cd Api
-```
-
-2. **Subir os containers (aplicação + MySQL):**
-```bash
-npm run docker:up
-```
-ou
-```bash
-docker-compose up -d
-```
-
-3. **Ver os logs dos containers:**
-```bash
-npm run docker:logs
-```
-
-4. **Parar os containers:**
-```bash
-npm run docker:down
-```
-
-### 🔗 Endpoints da API
-
-- `GET /listaClientes` - Listar todos os clientes
-- `POST /adicionaCliente` - Adicionar novo cliente
-- `GET /buscaCliente/:id` - Buscar cliente por ID
-- `PUT /editarCliente/:id` - Editar cliente
-- `DELETE /deletarCliente/:id` - Deletar cliente
-
-### 📦 Estrutura do Projeto
-
-```
-├── src/
-│   ├── controllers/
-│   │   └── clients.js
-│   ├── models/
-│   │   └── clientsModel.js
-│   └── db.js
-├── routes.js
-├── server.js
-├── Dockerfile
-├── docker-compose.yml
-└── package.json
-```
-
-### 🔧 Desenvolvimento Local (sem Docker)
-
-1. Instalar dependências:
-```bash
 npm install
-```
 
-2. Configurar arquivo `.env` com as credenciais do MySQL
 
-3. Rodar a aplicação:
-```bash
+Criar arquivo .env:
+
+PORT=3000
+DB_HOST=localhost
+DB_USER=root
+DB_PASSWORD=sua_senha
+DB_NAME=nome_do_banco
+JWT_SECRET=seu_segredo
+
+
+Rodar o projeto:
+
 npm run dev
-```
 
-A API estará disponível em `http://localhost:3000`
+
+Servidor roda em:
+
+http://localhost:3000
+
+Autenticação
+
+Após login, o token deve ser enviado no header:
+
+Authorization: Bearer SEU_TOKEN
+
+Rotas
+Auth
+
+POST /api/auth/register
+
+POST /api/auth/login
+
+Clientes (protegidas)
+
+GET /api/clients
+
+POST /api/clients
+
+PUT /api/clients/:id
+
+DELETE /api/clients/:id
+
+Estrutura
+src/
+ ├── controllers/
+ ├── middlewares/
+ ├── models/
+ ├── routes/
+ ├── app.js
+ └── server.js
+
+Status
+
+Projeto para fins de estudo e portfólio.
