@@ -11,3 +11,4 @@ routes.put("/clients/:id", authMiddleware, clientsController.editaCliente);
 routes.delete("/clients/:id", authMiddleware, clientsController.deletaCliente);
 
 module.exports = routes;
+
