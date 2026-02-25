@@ -4,10 +4,12 @@ const { sequelize } = require('./src/models');
 
 const PORT = process.env.PORT || 3000;
 
-sequelize.sync({ alter: true })
+sequelize.authenticate()
   .then(() => {
     console.log('Banco conectado');
-
+    return sequelize.sync();
+  })
+  .then(() => {
     app.listen(PORT, () => {
       console.log(`Servidor rodando na porta ${PORT}`);
     });
