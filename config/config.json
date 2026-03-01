@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "postgres",
+    "password": "261122",
+    "database": "sequelizenode",
+    "host": "postgres",
+    "dialect": "postgres"
+  },
+  "test": {
+    "username": "postgres",
+    "password": "261122",
+    "database": "sequelizenode",
+    "host": "postgres",
+    "dialect": "postgres"
+  },
+  "production": {
+    "username": "postgres",
+    "password": "261122",
+    "database": "sequelizenode",
+    "host": "postgres",
+    "dialect": "postgres"
+  }
+}

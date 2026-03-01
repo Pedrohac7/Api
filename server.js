@@ -7,7 +7,6 @@ const PORT = process.env.PORT || 3000;
 sequelize.authenticate()
   .then(() => {
     console.log('Banco conectado');
-    return sequelize.sync();
   })
   .then(() => {
     app.listen(PORT, () => {
