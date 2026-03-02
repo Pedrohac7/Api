@@ -7,9 +7,19 @@ module.exports = (sequelize, DataTypes) => {
     email: {
       type: DataTypes.STRING,
       allowNull: false,
-      unique: true,
+      // Não validar por email e sim pelo id. Pode quebrar silencisamente
     },
+    userId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    }
   });
+
+  Client.associate = (models) => {
+  Client.belongsTo(models.User, {
+    foreignKey: "userId",
+  });
+};
 
   return Client;
 };
