@@ -1,4 +1,4 @@
-const { Client } = require("../models");
+const clientService = require("../services/client.service");
 
 function success(res, status, data) {
   return res.status(status).json({
@@ -16,76 +16,50 @@ function failure(res, status, message) {
 
 async function listaClientes(req, res) {
   try {
-    const clients = await Client.findAll();
+    const clients = await clientService.listarClientes(req.userId);
     return success(res, 200, clients);
   } catch (error) {
-    return failure(res, 500, "Erro ao listar clientes");
+    return failure(res, 500, error.message);
   }
 }
 
 async function listaCliente(req, res) {
   try {
-    const client = await Client.findByPk(req.params.id);
-
-    if (!client) {
-      return failure(res, 404, "Cliente nao encontrado");
-    }
-
+    const client = await clientService.buscarCliente(req.params.id, req.userId);
     return success(res, 200, client);
   } catch (error) {
-    return failure(res, 500, "Erro ao buscar cliente");
+    return failure(res, 404, error.message);
   }
 }
 
 async function adicionaCliente(req, res) {
   try {
-    const client = await Client.create({
-      nome: req.body.nome,
-      email: req.body.email,
-    });
-
+    const client = await clientService.criarCliente(req.body, req.userId);
     return success(res, 201, client);
   } catch (error) {
-    return failure(res, 400, "Email já cadastrado");
+    return failure(res, 400, error.message);
   }
 }
 
 async function editaCliente(req, res) {
   try {
-    const [updated] = await Client.update(
-      {
-        nome: req.body.nome,
-        email: req.body.email,
-      },
-      {
-        where: { id: req.params.id },
-      }
+    const client = await clientService.atualizarCliente(
+      req.params.id,
+      req.body,
+      req.userId
     );
-
-    if (!updated) {
-      return failure(res, 404, "Cliente nao encontrado");
-    }
-
-    const client = await Client.findByPk(req.params.id);
     return success(res, 200, client);
   } catch (error) {
-    return failure(res, 500, "Erro ao atualizar cliente");
+    return failure(res, 404, error.message);
   }
 }
 
 async function deletaCliente(req, res) {
   try {
-    const deleted = await Client.destroy({
-      where: { id: req.params.id },
-    });
-
-    if (!deleted) {
-      return failure(res, 404, "Cliente nao encontrado");
-    }
-
+    await clientService.deletarCliente(req.params.id, req.userId);
     return res.status(204).send();
   } catch (error) {
-    return failure(res, 500, "Erro ao deletar cliente");
+    return failure(res, 404, error.message);
   }
 }
 
