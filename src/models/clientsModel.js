@@ -12,14 +12,17 @@ module.exports = (sequelize, DataTypes) => {
     userId: {
       type: DataTypes.INTEGER,
       allowNull: false,
+    },
+    tenantId: {
+      type: DataTypes.UUID,
+      allowNull: false,
     }
   });
 
   Client.associate = (models) => {
-  Client.belongsTo(models.User, {
-    foreignKey: "userId",
-  });
-};
+    Client.belongsTo(models.User, { foreignKey: "userId" });
+    Client.belongsTo(models.Tenant, { foreignKey: "tenantId" });
+  };
 
   return Client;
 };
