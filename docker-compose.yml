@@ -9,9 +9,9 @@ services:
       - postgres
     environment:
       - DB_HOST=postgres
-      - DB_NAME=sequelizenode
+      - DB_NAME=DB_NAME
       - DB_USER=postgres
-      - DB_PASSWORD=261122
+      - DB_PASSWORD=DB_PASSWORD
       - DB_SSL=false
     volumes:
       - .:/app
@@ -21,9 +21,9 @@ services:
     image: postgres:15
     container_name: postgres_db
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: 261122
-      POSTGRES_DB: sequelizenode
+      POSTGRES_USER: DB_USER
+      POSTGRES_PASSWORD: DB_PASSWORD
+      POSTGRES_DB: DB_NAME
     ports:
       - "5432:5432"
     volumes:
