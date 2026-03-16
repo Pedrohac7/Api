@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
-const { User } = require('../models');
+const { User,Tenant } = require('../models');
 
 exports.login = async (req, res) => {
   try {
@@ -37,17 +37,18 @@ exports.register = async (req, res) => {
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
+    const tenant = await Tenant.create({
+      name: `${name}-tenant`
+    });
+
     const user = await User.create({
       name,
       email,
-      password: hashedPassword
+      password: hashedPassword,
+      tenantId: tenant.id
     });
 
-    return res.status(201).json({
-      id: user.id,
-      name: user.name,
-      email: user.email
-    });
+    return res.status(201).json(user);
 
   } catch (error) {
     console.error(error);
