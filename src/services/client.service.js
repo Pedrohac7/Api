@@ -1,4 +1,5 @@
 const { Client } = require("../models");
+const AppError = require("../errors/AppError");
 
 async function listarClientes(userId) {
   return Client.findAll({
@@ -12,7 +13,7 @@ async function buscarCliente(id, userId) {
   });
 
   if (!client) {
-    throw new Error("Cliente não encontrado");
+    throw new AppError("Cliente não encontrado", 404, "CLIENT_NOT_FOUND");
   }
 
   return client;
