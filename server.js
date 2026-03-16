@@ -7,8 +7,10 @@ const PORT = process.env.PORT || 3000;
 sequelize.authenticate()
   .then(() => {
     console.log('Banco conectado');
+    return sequelize.sync();   // cria as tabelas
   })
   .then(() => {
+    console.log('Tabelas sincronizadas');
     app.listen(PORT, () => {
       console.log(`Servidor rodando na porta ${PORT}`);
     });
