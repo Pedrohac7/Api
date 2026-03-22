@@ -34,7 +34,7 @@ async function listaCliente(req, res) {
 
 async function adicionaCliente(req, res) {
   try {
-    const client = await clientService.criarCliente(req.body, req.userId);
+    const client = await clientService.criarCliente(req.body, req.userId, req.tenantId);
     return success(res, 201, client);
   } catch (error) {
     return failure(res, 400, error.message);

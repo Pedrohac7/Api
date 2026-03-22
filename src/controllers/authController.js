@@ -19,7 +19,7 @@ exports.login = async (req, res) => {
     }
 
     const token = jwt.sign(
-      { id: user.id },                 // payload
+      { id: user.id, tenantId: user.tenantId },                 // payload
       process.env.JWT_SECRET,          // chave secreta
       { expiresIn: process.env.JWT_EXPIRES_IN }
     );

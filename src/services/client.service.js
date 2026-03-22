@@ -19,10 +19,11 @@ async function buscarCliente(id, userId) {
   return client;
 }
 
-async function criarCliente(data, userId) {
+async function criarCliente(data, userId,tenantId) {
   return Client.create({
     ...data,
-    userId
+    userId,
+    tenantId
   });
 }
 
