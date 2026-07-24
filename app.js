@@ -10,6 +10,16 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+app.get('/api/health', (_req, res) => {
+  res.status(200).json({
+    success: true,
+    data: {
+      status: 'online',
+      service: 'node-multitenant-api',
+    },
+  });
+});
+
 app.use('/api', routes);
 app.use('/api/auth', authRoutes);
 
