@@ -1,0 +1,2 @@
+const tech = ['Node.js','Express','TypeScript','Prisma','PostgreSQL','JWT','Docker','Bootstrap','React']
+export function TechStack() { return <section className="tech-stack"><div className="container"><p>Made with a stack teams already trust</p><div className="tech-badges">{tech.map((item, i)=><span key={item}><i className={`bi ${['bi-hexagon','bi-lightning','bi-filetype-tsx','bi-database-gear','bi-database','bi-shield-check','bi-box-seam','bi-bootstrap','bi-braces'][i]}`} />{item}</span>)}</div></div></section> }
